@@ -52,6 +52,25 @@ services:
     cap_add:
       - NET_ADMIN
 
+  vpn_server:
+    image: lscr.io/linuxserver/wireguard:latest
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Lisbon
+      - PEERS=2
+      - ALLOWEDIPS=172.31.255.0/27
+    networks:
+      hq_dmz_net:
+        ipv4_address: 172.16.123.132
+    volumes:
+      - ./wireguard-client:/config
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+
   hq_edge_router:
     build: ./baseimage
     networks:
