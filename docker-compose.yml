@@ -13,6 +13,12 @@ networks:
       config:
         - subnet: 10.0.2.0/24
           gateway: 10.0.2.1
+  dmz_net:
+    ipam:
+      driver: default
+      config: 
+        - subnet: 172.16.123.128/28
+          gateway: 172.16.123.140 
 
 services:
   client:
@@ -40,6 +46,21 @@ services:
         ipv4_address: 10.0.1.254
       server_net:
         ipv4_address: 10.0.2.254
+      dmz_net:
+        ipv4_address: 172.16.123.142
+    cap_add:
+      - NET_ADMIN
+  
+  dns_server:
+    build: ./dns
+    volumes:
+      - ./dns/etcbind/db.myorg.net:/etc/bind/db.myorg.net
+      - ./dns/etcbind/named.conf.local:/etc/bind/named.conf.local
+      - /var/cache/bind
+      - /var/lib/bind
+    networks:
+      dmz_net:
+        ipv4_address: 172.16.123.129
     cap_add:
       - NET_ADMIN
 
