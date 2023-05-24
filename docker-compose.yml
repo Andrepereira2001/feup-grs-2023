@@ -1,24 +1,27 @@
 version: '3'
 
 networks:
-  isp_net:
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.30.255.0/24
-          gateway: 172.30.255.1
   hq_dmz_net:
     ipam:
       driver: default
       config:
         - subnet: 172.16.123.128/28
           gateway: 172.16.123.129
+
   hq_private_net:
     ipam:
       driver: default
       config:
         - subnet: 10.0.1.0/24
           gateway: 10.0.1.1
+
+  isp_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.30.255.0/24
+          gateway: 172.30.255.1
+
   shop_a_net:
     ipam:
       driver: default
