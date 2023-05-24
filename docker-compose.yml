@@ -1,0 +1,45 @@
+version: '3'
+
+networks:
+  client_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.0.1.0/24
+          gateway: 10.0.1.1
+  server_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.0.2.0/24
+          gateway: 10.0.2.1
+
+services:
+  client:
+    build: ./baseimage
+    networks:
+      client_net:
+        ipv4_address: 10.0.1.101
+    cap_add:
+      - NET_ADMIN
+  
+  nginxint:
+    build: ./nginximage
+    volumes:
+      - ./www/internal:/usr/share/nginx/html:ro
+    networks:
+      server_net:
+        ipv4_address: 10.0.2.101
+    cap_add:
+       - NET_ADMIN
+
+  router:
+    build: ./baseimage
+    networks:
+      client_net:
+        ipv4_address: 10.0.1.254
+      server_net:
+        ipv4_address: 10.0.2.254
+    cap_add:
+      - NET_ADMIN
+
