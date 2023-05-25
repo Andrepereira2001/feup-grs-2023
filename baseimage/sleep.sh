@@ -18,6 +18,7 @@ else
     done
 fi
 
+# Add NAT
 if [[ -z "${NAT}" ]]; then
     echo "No NAT"
 else
@@ -27,6 +28,11 @@ else
     /sbin/iptables -P FORWARD DROP
     /sbin/iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
     /sbin/iptables -A FORWARD -m state --state NEW -i $INTERN_INTERFACE -j ACCEPT
+    if [[ -z "${DMZ}" ]]; then
+        echo "No DMZ"
+    else
+        /sbin/iptables -A FORWARD -m state --state NEW -d $DMZ -j ACCEPT
+    fi
 fi
 
 # /bin/bash -c 'iptables -t filter -A FORWARD -p tcp --dport 80 ! -s 10.0.1.253 -j DROP'

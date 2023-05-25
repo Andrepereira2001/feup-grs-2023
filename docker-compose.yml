@@ -84,6 +84,9 @@ services:
     environment:
       - DEFAULT_ROUTE=172.30.255.254
       - ROUTES=10.0.1.0/24:172.16.123.141;
+      - NAT=10.0.1.0/24
+      - INTERN_INTERFACE=eth0
+      - DMZ=172.16.123.128/28
     cap_add:
       - NET_ADMIN
 
