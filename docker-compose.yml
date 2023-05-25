@@ -42,18 +42,20 @@ services:
     cap_add:
        - NET_ADMIN
 
+  # TODO: default route setup via edge router `ip r r default via 172.16.123.142`
   dns_server:
-    build: ./dns
+    image: internetsystemsconsortium/bind9:9.19
     volumes:
-      - ./dns/etcbind/db.myorg.net:/etc/bind/db.myorg.net
-      - ./dns/etcbind/named.conf.local:/etc/bind/named.conf.local
+      - ./dns/conf:/etc/bind
       - /var/cache/bind
       - /var/lib/bind
+      - ./dns/logs/:/var/logs
     networks:
       hq_dmz_net:
         ipv4_address: 172.16.123.131
     cap_add:
       - NET_ADMIN
+    restart: always
 
   vpn_server:
     image: lscr.io/linuxserver/wireguard:latest
@@ -119,6 +121,8 @@ services:
     networks:
       shop_a_net:
         ipv4_address: 172.31.255.2
+    dns:
+      - 172.16.123.131
     environment:
       - DEFAULT_ROUTE=172.31.255.6
     cap_add:

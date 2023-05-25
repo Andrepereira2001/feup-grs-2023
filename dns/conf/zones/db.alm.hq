@@ -1,0 +1,17 @@
+; ALM public dns config
+$TTL 1d			; default TTL for zone
+$ORIGIN alm.hq.		; base domain-name
+
+@ 	IN 	SOA 	ns1.alm.hq. root.alm.hq. (
+		2023052517	; serial number
+		12h		; refresh
+		15m		; update retry
+		3w		; expiry
+		2h		; minimum
+)
+
+	IN 	NS	ns1.alm.hq.	
+
+ns1		IN 	A	172.16.123.131
+www		IN	A	172.16.123.130
+vpn		IN	A	172.16.123.132
