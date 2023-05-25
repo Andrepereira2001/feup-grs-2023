@@ -19,7 +19,7 @@ device in shop A net ping isp router | OK
 isp router ping device in HQ private net | FAIL
 `docker exec feup-grs-2023-isp_router-1 /bin/bash -c 'ping 10.0.1.2'`
 
-device in HQ private net ping isp router | OK
+device in HQ DMZ net ping isp router | OK
 `docker exec feup-grs-2023-hq_private_server-1 /bin/bash -c 'ping 172.30.255.254'`
 
 isp router ping device in HQ public net | OK
@@ -27,3 +27,6 @@ isp router ping device in HQ public net | OK
 
 device in shop A net ping HQ public server| OK
 `docker exec feup-grs-2023-shop_a_client-1 /bin/bash -c 'ping 172.16.123.130'`
+
+device in HQ DMZ net ping HQ private server| OK
+`docker exec feup-grs-2023-hq_server-1 /bin/bash -c 'ping 10.0.1.2'`
