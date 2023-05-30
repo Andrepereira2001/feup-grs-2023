@@ -44,7 +44,7 @@ services:
 
   # TODO: default route setup via edge router `ip r r default via 172.16.123.142`
   dns_server:
-    image: internetsystemsconsortium/bind9:9.19
+    build: ./dns
     volumes:
       - ./dns/conf:/etc/bind
       - /var/cache/bind
