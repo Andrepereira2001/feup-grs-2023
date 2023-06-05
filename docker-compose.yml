@@ -64,14 +64,16 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/Lisbon
-      - PEERS=2
-      - ALLOWEDIPS=172.31.255.0/27
+      - TZ=Etc/UTC
+      - PEERS=1
+      - INTERNAL_SUBNET=10.0.1.16
+      - ALLOWEDIPS=10.0.1.0/24,172.16.123.132
+      - PERSISTENTKEEPALIVE_PEERS=all
     networks:
       hq_dmz_net:
         ipv4_address: 172.16.123.132
     volumes:
-      - ./wireguard-client:/config
+      - ./wireguard/config:/config
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
     restart: unless-stopped
@@ -125,6 +127,8 @@ services:
       - 172.16.123.131
     environment:
       - DEFAULT_ROUTE=172.31.255.6
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
     cap_add:
       - NET_ADMIN
   
