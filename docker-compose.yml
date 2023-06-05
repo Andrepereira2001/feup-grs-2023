@@ -106,6 +106,8 @@ services:
 
   shop_a_router:
     build: ./baseimage
+    volumes:
+      - ./baseimage/peer1:/etc/wireguard
     networks:
       isp_net:
         ipv4_address: 172.30.255.2
@@ -115,6 +117,7 @@ services:
       - DEFAULT_ROUTE=172.30.255.254
       - NAT=172.31.255.0/29
       - INTERN_INTERFACE=eth1
+      - VPN=True
     cap_add:
       - NET_ADMIN
 

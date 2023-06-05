@@ -37,3 +37,11 @@ device in shop A net ping HQ DNS server | OK
 
 device in shop A net ping HQ www server | OK
 `docker exec feup-grs-2023-shop_a_client-1 /bin/bash -c 'ping www.alm.hq'`
+
+### VPN
+device in shop A net ping HQ private server | OK
+`docker exec feup-grs-2023-shop_a_client-1 /bin/bash -c 'ping 10.0.1.2'`
+
+desable VPN `wg-quick down wg0`
+
+enable VPN `wg-quick up wg0`
