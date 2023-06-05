@@ -22,16 +22,16 @@ fi
 if [[ -z "${NAT}" ]]; then
     echo "No NAT"
 else
-    /sbin/iptables -t nat -F
-    /sbin/iptables -t filter -F
-    /sbin/iptables -t nat -A POSTROUTING -s $NAT -j MASQUERADE
-    /sbin/iptables -P FORWARD DROP
-    /sbin/iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
-    /sbin/iptables -A FORWARD -m state --state NEW -i $INTERN_INTERFACE -j ACCEPT
+    /sbin/iptables-legacy -t nat -F
+    /sbin/iptables-legacy -t filter -F
+    /sbin/iptables-legacy -t nat -A POSTROUTING -s $NAT -j MASQUERADE
+    /sbin/iptables-legacy -P FORWARD DROP
+    /sbin/iptables-legacy -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
+    /sbin/iptables-legacy -A FORWARD -m state --state NEW -i $INTERN_INTERFACE -j ACCEPT
     if [[ -z "${DMZ}" ]]; then
         echo "No DMZ"
     else
-        /sbin/iptables -A FORWARD -m state --state NEW -d $DMZ -j ACCEPT
+        /sbin/iptables-legacy -A FORWARD -m state --state NEW -d $DMZ -j ACCEPT
     fi
 fi
 
