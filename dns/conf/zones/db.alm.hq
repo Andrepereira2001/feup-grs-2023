@@ -13,5 +13,6 @@ $ORIGIN alm.hq.		; base domain-name
 	IN 	NS	ns1.alm.hq.	
 
 ns1		IN 	A	172.16.123.131
+www.db  IN  A 	10.0.1.2
 www		IN	A	172.16.123.130
 vpn		IN	A	172.16.123.132

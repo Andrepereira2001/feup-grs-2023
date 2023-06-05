@@ -45,3 +45,11 @@ device in shop A net ping HQ private server | OK
 desable VPN `wg-quick down wg0`
 
 enable VPN `wg-quick up wg0`
+
+### VPN + DNS
+device in shop A net ping HQ private server using namespace | OK
+`docker exec feup-grs-2023-shop_a_client-1 /bin/bash -c 'www.db.alm.hq'`
+
+desable VPN `wg-quick down wg0`
+
+enable VPN `wg-quick up wg0`
