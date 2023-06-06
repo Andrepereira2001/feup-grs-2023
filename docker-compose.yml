@@ -28,6 +28,20 @@ networks:
       config:
         - subnet: 172.31.255.0/29
           gateway: 172.31.255.1
+  
+  shop_b_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.31.255.8/29
+          gateway: 172.31.255.9
+
+  shop_c_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.31.255.16/29
+          gateway: 172.31.255.17
 
 services:
   hq_server:
@@ -132,6 +146,70 @@ services:
       - DEFAULT_ROUTE=172.31.255.6
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
+    cap_add:
+      - NET_ADMIN
+  
+  shop_a_client_2:
+    build: ./baseimage
+    networks:
+      shop_a_net:
+        ipv4_address: 172.31.255.3
+    dns:
+      - 172.16.123.131
+    environment:
+      - DEFAULT_ROUTE=172.31.255.6
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    cap_add:
+      - NET_ADMIN
+
+  shop_b_router:
+    build: ./baseimage
+    networks:
+      isp_net:
+        ipv4_address: 172.30.255.3
+      shop_b_net:
+        ipv4_address: 172.31.255.14
+    environment:
+      - DEFAULT_ROUTE=172.30.255.254
+      - NAT=172.31.255.8/29
+      - INTERN_INTERFACE=eth1
+    cap_add:
+      - NET_ADMIN
+
+  shop_b_client:
+    build: ./baseimage
+    networks:
+      shop_b_net:
+        ipv4_address: 172.31.255.10
+    dns:
+      - 172.16.123.131
+    environment:
+      - DEFAULT_ROUTE=172.31.255.14
+    cap_add:
+      - NET_ADMIN
+
+  shop_c_router:
+    build: ./baseimage
+    networks:
+      isp_net:
+        ipv4_address: 172.30.255.4
+      shop_c_net:
+        ipv4_address: 172.31.255.22
+    environment:
+      - DEFAULT_ROUTE=172.30.255.254
+    cap_add:
+      - NET_ADMIN
+
+  shop_c_client:
+    build: ./baseimage
+    networks:
+      shop_c_net:
+        ipv4_address: 172.31.255.18
+    dns:
+      - 172.16.123.131
+    environment:
+      - DEFAULT_ROUTE=172.31.255.22
     cap_add:
       - NET_ADMIN
   

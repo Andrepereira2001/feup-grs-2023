@@ -6,6 +6,16 @@ Gestão de redes e sistemas project
 
 `ip r ls`
 
+## Shops cofig
+
+#### Shop A
+VPN + NAT 
+
+#### Shop B
+NAT 
+
+#### Shop C
+
 ## TEST
 
 ### NAT shop A
@@ -48,7 +58,7 @@ enable VPN `wg-quick up wg0`
 
 ### VPN + DNS
 device in shop A net ping HQ private server using namespace | OK
-`docker exec feup-grs-2023-shop_a_client-1 /bin/bash -c 'www.db.alm.hq'`
+`docker exec feup-grs-2023-shop_a_client-1 /bin/bash -c 'ping www.db.alm.hq'`
 
 desable VPN `wg-quick down wg0`
 
